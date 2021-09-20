@@ -28,6 +28,7 @@ public class BankAccount {
     private Double balance = 50.00; //An account is created initially with 50 EUROS
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private AccountType type;
 
     @Column(name = "overdraft")
