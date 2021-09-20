@@ -18,7 +18,7 @@ public class BankAccount {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "owner")
+    @OneToOne
     private Person owner;
 
     @Column(name = "password")
