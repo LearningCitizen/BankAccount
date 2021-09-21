@@ -1,7 +1,9 @@
 package com.jhippolyte.bankaccount.controller;
 
+import com.jhippolyte.bankaccount.dto.BankAccountDto;
 import com.jhippolyte.bankaccount.model.BankAccount;
 import com.jhippolyte.bankaccount.service.BankAccountService;
+import com.jhippolyte.bankaccount.service.MapService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +21,14 @@ public class BankAccountController {
     @Autowired
     BankAccountService bankAccountService;
 
+    @Autowired
+    MapService mapService;
+
     @GetMapping(path = "/{number}")
-    public ResponseEntity<BankAccount> getAccount(@RequestParam String accountNumber) {
+    public ResponseEntity<BankAccountDto> getAccount(@RequestParam String accountNumber) {
         LOGGER.info("Getting account of account number : " + accountNumber);
-        ResponseEntity<BankAccount> responseEntity = ResponseEntity.ok(bankAccountService.getAccount(accountNumber));
+        BankAccountDto bankAccountDto = mapService.mapToDto((bankAccountService.getAccount(accountNumber)));
+        ResponseEntity<BankAccountDto> responseEntity = ResponseEntity.ok(bankAccountDto);
         return responseEntity;
     }
 
