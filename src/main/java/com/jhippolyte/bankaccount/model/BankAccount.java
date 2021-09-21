@@ -1,5 +1,6 @@
 package com.jhippolyte.bankaccount.model;
 
+import com.jhippolyte.bankaccount.exception.WithdrawNotAllowedException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,7 +36,12 @@ public class BankAccount {
     @Column(name = "overdraft")
     private Double overdraft = 0.00; //No overdraft allowed
 
-    public void withdraw(double amount){
+    private static final String WITHDRAWAL_ERROR_MESSAGE = "The amount %s cannot be withdrawn because it exceeds the balance and the overdraft of the account";
+
+    public void withdraw(double amount) throws WithdrawNotAllowedException{
+        if (balance + overdraft - amount < 0) {
+            throw new WithdrawNotAllowedException(String.format(WITHDRAWAL_ERROR_MESSAGE, amount));
+        }
         this.balance = balance - amount;
     }
 

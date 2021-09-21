@@ -16,13 +16,7 @@ public class BankAccountService {
 
     Logger logger = LoggerFactory.getLogger(BankAccountService.class);
 
-    public double getBalance(String accountNumber) throws BankAccountNotFoundException {
-        BankAccount account = getAccount(accountNumber);
-        logger.info("Get Balance of the account");
-        return account.getBalance();
-    }
-
-    public BankAccount getAccount(String accountNumber) {
+    public BankAccount getAccount(String accountNumber) throws BankAccountNotFoundException {
         logger.info("Get Account with account number");
         BankAccount account = bankAccountRepository.findByAccountNumber(accountNumber);
         if (account == null) {
@@ -30,4 +24,18 @@ public class BankAccountService {
         }
         return account;
     }
+
+    public double getBalance(String accountNumber) throws BankAccountNotFoundException {
+        BankAccount account = getAccount(accountNumber);
+        logger.info("Get Balance of the account");
+        return account.getBalance();
+    }
+
+    public void withdraw (String accountNumber, double amount) throws BankAccountNotFoundException
+    {
+        BankAccount account = getAccount(accountNumber);
+        account.withdraw(amount);
+        bankAccountRepository.save(account);
+    }
+
 }

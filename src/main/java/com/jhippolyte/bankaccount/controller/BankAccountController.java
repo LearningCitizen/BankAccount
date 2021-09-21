@@ -5,6 +5,7 @@ import com.jhippolyte.bankaccount.model.BankAccount;
 import com.jhippolyte.bankaccount.service.BankAccountService;
 import com.jhippolyte.bankaccount.service.MapService;
 import io.swagger.annotations.Api;
+import io.swagger.models.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +26,24 @@ public class BankAccountController {
     MapService mapService;
 
     @GetMapping(path = "/{number}")
-    public ResponseEntity<BankAccountDto> getAccount(@RequestParam String accountNumber) {
-        LOGGER.info("Getting account of account number : " + accountNumber);
-        BankAccountDto bankAccountDto = mapService.mapToDto((bankAccountService.getAccount(accountNumber)));
+    public ResponseEntity<BankAccountDto> getAccount(@PathVariable String number) {
+        LOGGER.info("Getting account of account number : " + number);
+        BankAccountDto bankAccountDto = mapService.mapToDto((bankAccountService.getAccount(number)));
         ResponseEntity<BankAccountDto> responseEntity = ResponseEntity.ok(bankAccountDto);
         return responseEntity;
     }
 
     @GetMapping(path = "/{number}/balance/")
-    public ResponseEntity<Double> getAccountBalance(@PathVariable String accountNumber) {
-        LOGGER.info("Getting balance of account number : " + accountNumber);
-        ResponseEntity<Double> responseEntity = ResponseEntity.ok(bankAccountService.getBalance(accountNumber));
+    public ResponseEntity<Double> getAccountBalance(@PathVariable String number) {
+        LOGGER.info("Getting balance of account number : " + number);
+        ResponseEntity<Double> responseEntity = ResponseEntity.ok(bankAccountService.getBalance(number));
         return responseEntity;
+    }
+
+    @PutMapping(path = "/{number}/withdrawal")
+    public ResponseEntity<String> withdraw(@PathVariable String number, @RequestParam Double amount){
+        LOGGER.info("Withdrawing "+amount+" from account with account number : " + number);
+        this.bankAccountService.withdraw(number, amount);
+        return ResponseEntity.ok("Withwdrawal of "+amount+" done");
     }
 }
