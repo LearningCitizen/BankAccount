@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BankAccountService {
 
@@ -26,6 +28,9 @@ public class BankAccountService {
         return account;
     }
 
+    public List<BankAccount> getAccounts(){
+        return this.bankAccountRepository.findAll();
+    }
     public double getBalance(String accountNumber) throws BankAccountNotFoundException {
         BankAccount account = getAccount(accountNumber);
         logger.info("Get Balance of the account");

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/v1/bank/accounts")
 @Api(value = "bank-account-api")
@@ -24,6 +26,12 @@ public class BankAccountController {
 
     @Autowired
     MapService mapService;
+
+    @GetMapping
+    public ResponseEntity<List<BankAccount>>getAllAccounts(){
+        return ResponseEntity.ok(this.bankAccountService.getAccounts());
+    }
+
 
     @GetMapping(path = "/{number}")
     public ResponseEntity<BankAccountDto> getAccount(@PathVariable String number) {
