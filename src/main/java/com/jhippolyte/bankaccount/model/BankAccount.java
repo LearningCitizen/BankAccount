@@ -24,9 +24,6 @@ public class BankAccount {
     @Column(name = "accountNumber")
     private String accountNumber;
 
-    @Column(name = "password")
-    private String password;
-
     @Column(name = "balance")
     private Double balance = 50.00; //An account is created initially with 50 EUROS
 

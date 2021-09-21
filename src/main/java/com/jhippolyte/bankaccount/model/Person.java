@@ -25,4 +25,11 @@ public class Person {
     @Column(name = "mail")
     private String mail;
 
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private PersonRole role;
+
 }
