@@ -24,6 +24,8 @@ public class BankAccountController {
     @GetMapping(path = "/balance")
     public ResponseEntity<Double> getBalance(@RequestParam String accountNumber)
     {
-        return ResponseEntity.ok(bankAccountService.getBalance(accountNumber));
+        LOGGER.info("Getting balance of account number : "+accountNumber);
+        ResponseEntity<Double> responseEntity = ResponseEntity.ok(bankAccountService.getBalance(accountNumber));
+        return responseEntity;
     }
 }
