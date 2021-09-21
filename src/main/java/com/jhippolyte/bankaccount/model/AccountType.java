@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public enum AccountType {
-    Current("current"),
-    Saving("saving");
+    CURRENT("CURRENT"),
+    SAVING("SAVING");
 
     private String type;
 }
