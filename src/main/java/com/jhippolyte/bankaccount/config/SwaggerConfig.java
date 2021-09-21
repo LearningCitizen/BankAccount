@@ -10,13 +10,16 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class SwaggerConfig {
 
+    public static final String BASE_PACKAGE = "com.jhippolyte.bankaccount";
+
     @Bean
     public Docket api(){
-        return new Docket(DocumentationType.SWAGGER_2)
+        Docket build = new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
                 .paths(PathSelectors.any())
                 .build();
+        return build;
     }
 
 }
