@@ -1,6 +1,7 @@
 package com.jhippolyte.bankaccount.service;
 
 import com.jhippolyte.bankaccount.exception.BankAccountNotFoundException;
+import com.jhippolyte.bankaccount.exception.DepositNotAllowedException;
 import com.jhippolyte.bankaccount.model.BankAccount;
 import com.jhippolyte.bankaccount.repository.BankAccountRepository;
 import org.slf4j.Logger;
@@ -31,11 +32,15 @@ public class BankAccountService {
         return account.getBalance();
     }
 
-    public void withdraw (String accountNumber, double amount) throws BankAccountNotFoundException
-    {
+    public void withdraw(String accountNumber, double amount) throws BankAccountNotFoundException {
         BankAccount account = getAccount(accountNumber);
         account.withdraw(amount);
         bankAccountRepository.save(account);
     }
 
+    public void deposit(String accountNumber, double amount) throws DepositNotAllowedException {
+        BankAccount account = getAccount(accountNumber);
+        account.deposit(amount);
+        bankAccountRepository.save(account);
+    }
 }

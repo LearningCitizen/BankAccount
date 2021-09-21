@@ -16,8 +16,8 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(value = { WithdrawNotAllowedException.class })
-    public ResponseEntity <String> handleWithdrawNotAllowedException(WithdrawNotAllowedException ex, WebRequest webRequest){
+    @ExceptionHandler(value = { WithdrawNotAllowedException.class, DepositNotAllowedException.class })
+    public ResponseEntity <String> handleWithdrawNotAllowedException(Exception ex, WebRequest webRequest){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
     }

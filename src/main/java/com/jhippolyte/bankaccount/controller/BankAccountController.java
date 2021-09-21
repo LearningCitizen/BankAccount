@@ -46,4 +46,11 @@ public class BankAccountController {
         this.bankAccountService.withdraw(number, amount);
         return ResponseEntity.ok("Withwdrawal of "+amount+" done");
     }
+
+    @PutMapping(path = "/{number}/deposit")
+    public ResponseEntity<String> deposit(@PathVariable String number, @RequestParam Double amount){
+        LOGGER.info("Depositing "+amount+" on account with account number : " + number);
+        this.bankAccountService.deposit(number, amount);
+        return ResponseEntity.ok("Deposit of "+amount+" done");
+    }
 }
