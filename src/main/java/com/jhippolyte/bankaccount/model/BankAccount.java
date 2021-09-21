@@ -21,6 +21,9 @@ public class BankAccount {
     @OneToOne
     private Person owner;
 
+    @Column(name = "accountNumber")
+    private String accountNumber;
+
     @Column(name = "password")
     private String password;
 
