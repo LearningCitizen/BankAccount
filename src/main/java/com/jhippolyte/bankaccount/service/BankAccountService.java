@@ -17,12 +17,17 @@ public class BankAccountService {
     Logger logger = LoggerFactory.getLogger(BankAccountService.class);
 
     public double getBalance(String accountNumber) throws BankAccountNotFoundException {
+        BankAccount account = getAccount(accountNumber);
+        logger.info("Get Balance of the account");
+        return account.getBalance();
+    }
+
+    public BankAccount getAccount(String accountNumber) {
         logger.info("Get Account with account number");
         BankAccount account = bankAccountRepository.findByAccountNumber(accountNumber);
         if (account == null) {
             throw new BankAccountNotFoundException("No bank account found for account number  : " + accountNumber);
         }
-        logger.info("Get Balance of the account");
-        return account.getBalance();
+        return account;
     }
 }
