@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/v1/bank/accounts")
@@ -29,15 +28,10 @@ public class BankAccountController {
     @Autowired
     MapService mapService;
 
-    @Autowired
-    SecurityService securityService;
-
     @GetMapping
     public ResponseEntity<List<BankAccount>> getAllAccounts(Principal principal) {
         LOGGER.info("Getting all the accounts of " + principal.getName());
-        return ResponseEntity.ok(this.bankAccountService.getAccounts()
-                .stream().filter(bankAccount -> securityService.bankAccountIsAccessible(bankAccount, principal.getName()))
-                .collect(Collectors.toList()));
+        return ResponseEntity.ok(this.bankAccountService.getAccounts(principal.getName()));
     }
 
 

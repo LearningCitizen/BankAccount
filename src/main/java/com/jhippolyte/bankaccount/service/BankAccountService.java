@@ -10,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BankAccountService {
 
     @Autowired
     BankAccountRepository bankAccountRepository;
+
+    @Autowired
+    SecurityService securityService;
 
     Logger logger = LoggerFactory.getLogger(BankAccountService.class);
 
@@ -28,8 +32,11 @@ public class BankAccountService {
         return account;
     }
 
-    public List<BankAccount> getAccounts() {
-        return this.bankAccountRepository.findAll();
+    public List<BankAccount> getAccounts(String userName) {
+        return this.bankAccountRepository.findAll()
+                .stream()
+                .filter(bankAccount -> securityService.bankAccountIsAccessible(bankAccount,userName))
+                .collect(Collectors.toList());
     }
 
     public double getBalance(String accountNumber) throws BankAccountNotFoundException {
