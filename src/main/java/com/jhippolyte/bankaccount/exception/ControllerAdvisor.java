@@ -22,4 +22,9 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
+    @ExceptionHandler(value = { SecurityException.class })
+    public ResponseEntity <String> handleSecurityException(Exception ex, WebRequest webRequest){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ex.getMessage());
+    }
 }

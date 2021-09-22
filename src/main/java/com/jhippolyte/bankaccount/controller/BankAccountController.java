@@ -36,31 +36,31 @@ public class BankAccountController {
 
 
     @GetMapping(path = "/{number}")
-    public ResponseEntity<BankAccountDto> getAccount(@PathVariable String number) {
+    public ResponseEntity<BankAccountDto> getAccount(Principal principal, @PathVariable String number) {
         LOGGER.info("Getting account of account number : " + number);
-        BankAccountDto bankAccountDto = mapService.mapToDto((bankAccountService.getAccount(number)));
+        BankAccountDto bankAccountDto = mapService.mapToDto((bankAccountService.getAccount(principal.getName(), number)));
         ResponseEntity<BankAccountDto> responseEntity = ResponseEntity.ok(bankAccountDto);
         return responseEntity;
     }
 
     @GetMapping(path = "/{number}/balance/")
-    public ResponseEntity<Double> getAccountBalance(@PathVariable String number) {
+    public ResponseEntity<Double> getAccountBalance(Principal principal, @PathVariable String number) {
         LOGGER.info("Getting balance of account number : " + number);
-        ResponseEntity<Double> responseEntity = ResponseEntity.ok(bankAccountService.getBalance(number));
+        ResponseEntity<Double> responseEntity = ResponseEntity.ok(bankAccountService.getBalance(principal.getName(), number));
         return responseEntity;
     }
 
     @PutMapping(path = "/{number}/withdrawal")
-    public ResponseEntity<String> withdraw(@PathVariable String number, @RequestParam Double amount) {
+    public ResponseEntity<String> withdraw(Principal principal, @PathVariable String number, @RequestParam Double amount) {
         LOGGER.info("Withdrawing " + amount + " from account with account number : " + number);
-        this.bankAccountService.withdraw(number, amount);
+        this.bankAccountService.withdraw(principal.getName(), number, amount);
         return ResponseEntity.ok("Withwdrawal of " + amount + " done");
     }
 
     @PutMapping(path = "/{number}/deposit")
-    public ResponseEntity<String> deposit(@PathVariable String number, @RequestParam Double amount) {
+    public ResponseEntity<String> deposit(Principal principal, @PathVariable String number, @RequestParam Double amount) {
         LOGGER.info("Depositing " + amount + " on account with account number : " + number);
-        this.bankAccountService.deposit(number, amount);
+        this.bankAccountService.deposit(principal.getName(), number, amount);
         return ResponseEntity.ok("Deposit of " + amount + " done");
     }
 }
