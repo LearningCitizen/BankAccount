@@ -28,9 +28,10 @@ public class BankAccountService {
         return account;
     }
 
-    public List<BankAccount> getAccounts(){
+    public List<BankAccount> getAccounts() {
         return this.bankAccountRepository.findAll();
     }
+
     public double getBalance(String accountNumber) throws BankAccountNotFoundException {
         BankAccount account = getAccount(accountNumber);
         logger.info("Get Balance of the account");
